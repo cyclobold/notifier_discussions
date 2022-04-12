@@ -1,0 +1,302 @@
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+    <meta name="generator" content="Hugo 0.88.1">
+    <title>Cover Template · Bootstrap v4.6</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/cover/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="stylesheets/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-zCbKRCUGaJDkqS1kPbPd7TveP5iyJE0EjAuZQTgFLD2ylzuqKfdKlfG/eSrtxUkn" crossorigin="anonymous">
+
+
+
+    <!-- Favicons -->
+<link rel="apple-touch-icon" href="/docs/4.6/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
+<link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-32x32.png" sizes="32x32" type="image/png">
+<link rel="icon" href="/docs/4.6/assets/img/favicons/favicon-16x16.png" sizes="16x16" type="image/png">
+<link rel="manifest" href="/docs/4.6/assets/img/favicons/manifest.json">
+<link rel="mask-icon" href="/docs/4.6/assets/img/favicons/safari-pinned-tab.svg" color="#563d7c">
+<link rel="icon" href="/docs/4.6/assets/img/favicons/favicon.ico">
+<meta name="msapplication-config" content="/docs/4.6/assets/img/favicons/browserconfig.xml">
+<meta name="theme-color" content="#563d7c">
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="stylesheets/style.css" rel="stylesheet">
+  </head>
+  <body class="text-center">
+    
+<div class="cover-container d-flex w-100 h-100 p-3 mx-auto flex-column">
+  <header class="masthead mb-auto">
+    <div class="inner">
+      <h3 class="masthead-brand">Cover</h3>
+      <nav class="nav nav-masthead justify-content-center">
+        <a class="nav-link active" href="#">Home</a>
+        <a class="nav-link" href="#">Features</a>
+        <a class="nav-link" href="#">Contact</a>
+        {{#if isUserLoggedIn }}
+            <a class="btn btn-sm btn-danger" href="#">Log Out</a>
+        {{else}}
+            <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
+            <a class="nav-link" href="#">Create Account</a>
+        {{/if}}
+      </nav>
+    </div>
+  </header>
+
+  <main role="main" class="inner cover">
+    <h2 class="cover-heading">Manage Notes.</h2>
+        <div class="row">
+       {{#each notes}}
+               <div class="col-md-6">
+                    <div class="card">
+                        <div class="card-body text-dark">
+                            <div class="card-title"></div>
+                            <h3>
+                                 {{this.name}}
+                            </h3>
+                            <p class="muted">- {{ this.meta.author }}</p>
+                            <p class="muted"><small>- {{ this.meta.month }}, {{ this.meta.year }}</small></p>
+                        </div>
+                </div>
+               </div>
+
+           
+       {{/each}}
+       </div>
+
+
+
+    <div class="mt-5">
+      
+      {{#if isUserLoggedIn }}
+            <button type="button" id="create-post-button" class="btn btn-lg btn-secondary">Create Note</button>
+     {{/if}}
+
+    </div>
+  </main>
+
+  <footer class="mastfoot mt-auto">
+    <div class="inner">
+      <p>Cover template for <a href="https://getbootstrap.com/">Bootstrap</a>, by <a href="https://twitter.com/mdo">@mdo</a>.</p>
+    </div>
+  </footer>
+</div>
+
+
+<!-- Modals -->
+    <!-- Login Modal -->
+    <div class="modal" tabindex="-1" id="loginModal" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content text-dark">
+            <div class="modal-header">
+                <h5 class="modal-title">Log in</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="login-info"></div>
+                <form class="form" method="POST" id="login-form" style="text-align: left !important;">
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name='username' class="form-control" id="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name='password' class="form-control" id="password">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Log In</button>
+                    </div>
+
+                    <div class="form-group">
+                        {{!-- <button type="button" onclick="location.href='/create-account'" class="btn btn-primary">Create new Account</button> --}}
+                        <button type="button" data-toggle="modal" data-target="#create-account-modal" class="btn btn-primary">Create new Account</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                
+            </div>
+            </div>
+        </div>
+        </div>
+    <!-- End of Login Modal -->
+
+    <!-- Create New Account Modal -->
+    <div class="modal" tabindex="-1" id="create-account-modal" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content text-dark">
+            <div class="modal-header">
+                <h5 class="modal-title">Create Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="create-account-info"></div>
+                <form class="form" method="POST" id="create-account-form" style="text-align: left !important;">
+                    <div class="form-group">
+                        <label>Full name</label>
+                        <input type="text" name='fullname' class="form-control" id="fullname">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" name='username' class="form-control" id="username">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" name='password' class="form-control" id="password">
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary">Create Account</button>
+                    </div>
+
+                    <div class="form-group">
+                        {{!-- <button type="button" onclick="location.href='/create-account'" class="btn btn-primary">Create new Account</button> --}}
+                        <button type="button" id="open-login-modal" class="btn btn-primary">Log in</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                
+            </div>
+            </div>
+        </div>
+        </div>
+
+    <!-- End of Create New Account Modal -->
+
+<!-- End of Modals -->
+    
+  </body>
+    <script src="javascripts/js/jquery.min.js"></script>
+    <script src="javascripts/js/bootstrap.min.js"></script>
+    <script src="javascripts/js/axios.min.js"></script>
+  <script>
+      
+      createPostButton = document.querySelector("#create-post-button");
+
+      if(createPostButton){
+           createPostButton.addEventListener("click", function(e){
+          
+          axios.post("/create-note").then((feedback) =>{
+
+                console.log(feedback);
+
+          })
+
+      })
+
+      }
+
+        //Login 
+      const loginForm = document.querySelector("#login-form");
+      if(loginForm){
+          loginForm.addEventListener("submit", function(e){
+              e.preventDefault();
+
+              let username = this.username.value.trim();
+              let password = this.password.value.trim();
+
+              if(username.length > 0 && password.length > 0){
+                  //
+                  axios.post("/login-user", {
+                      username: username,
+                      password: password
+                  }).then((result) =>{
+                      if(result.data.code == "error"){
+                          document.querySelector("#login-info").innerHTML = `<div class='alert alert-danger'>${result.data.message}</div>`
+                      }else{
+
+                        localStorage.setItem("user", JSON.stringify(result.data.data));
+
+                        location.reload(); 
+                         
+                      }
+                      
+
+                  })
+              }
+          })
+
+      }
+
+
+      //Create Account 
+       const createAccountForm = document.querySelector("#create-account-form");
+      if(createAccountForm){
+          createAccountForm.addEventListener("submit", function(e){
+              e.preventDefault();
+            
+              let fullname = this.fullname.value.trim();
+              let username = this.username.value.trim();
+              let password = this.password.value.trim();
+
+              if(fullname.length > 0 && username.length > 0 && password.length > 0){
+                  //
+                  axios.post("/register-user", {
+                      fullname: fullname,
+                      username: username,
+                      password: password
+                  }).then((result) =>{
+                      if(result.data.code == "error"){
+                          document.querySelector("#create-account-info").innerHTML = `<div class='alert alert-danger'>${result.data.message}</div>`
+                      }else{
+                          document.querySelector("#create-account-info").innerHTML = `<div class='alert alert-success'>${result.data.message}</div>`
+
+                      }
+                      
+
+                  })
+              }
+          })
+
+      }
+
+      openLoginModal = document.querySelector("#open-login-modal");
+
+      if(openLoginModal){
+          openLoginModal.addEventListener("click", function(){
+              $("#create-account-modal").modal("hide");
+
+          })
+      }
+
+     
+  </script>
+</html>
