@@ -13,7 +13,17 @@ const connection_ = new MongoClient(process.env.DB_HOST);
 router.get('/', async function(req, res, next) {
 
 const checkConnection = await connection_.connect();
+
 let isUserLoggedIn = false;
+
+if(typeof req.session.user != 'undefined'){
+  if(req.session.user.is_logged_in == true){
+    isUserLoggedIn = true;
+  }
+
+}
+
+
 let notes = [];
 if(checkConnection){
   notes = await connection_.db(process.env.DB_NAME).collection("notes").find().toArray();

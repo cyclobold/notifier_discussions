@@ -61,7 +61,7 @@
         <a class="nav-link" href="#">Features</a>
         <a class="nav-link" href="#">Contact</a>
         {{#if isUserLoggedIn }}
-            <a class="btn btn-sm btn-danger" href="#">Log Out</a>
+            <a class="btn btn-sm btn-danger" href="#" id="logout-id">Log Out</a>
         {{else}}
             <a class="nav-link" href="#" data-toggle="modal" data-target="#loginModal">Log In</a>
             <a class="nav-link" href="#">Create Account</a>
@@ -242,11 +242,7 @@
                       if(result.data.code == "error"){
                           document.querySelector("#login-info").innerHTML = `<div class='alert alert-danger'>${result.data.message}</div>`
                       }else{
-
-                        localStorage.setItem("user", JSON.stringify(result.data.data));
-
                         location.reload(); 
-                         
                       }
                       
 
@@ -296,6 +292,26 @@
 
           })
       }
+
+
+      const logoutBtn = document.querySelector("#logout-id");
+
+      if(logoutBtn){
+        logoutBtn.addEventListener("click", function(e){
+          e.preventDefault();
+
+          axios.post("/logout").then((feedback) => {
+             
+             if(feedback.code == "success"){
+                 location.reload();
+             }
+
+          })
+
+      })
+      }
+
+     
 
      
   </script>
